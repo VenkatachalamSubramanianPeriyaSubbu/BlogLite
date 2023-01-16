@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Following</title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static',filename='Style8.css')}}>
+</head>
+<body>
+  <nav>
+    <div class="l">
+      <img src={{url_for('static',filename='Blog_pic.png')}} class='logo'>
+      <a class="Links" href="/{{user_name}}/profile">View Profile</a>
+      <a class="Links" href="/{{user_name}}/home">Home</a>
+      <a class="Links" href="/login"> Log Out </a>
+      <ul>
+        <li>
+           
+        </li>
+      </ul>
+    </div>
+    <div class="nav-user-icon">
+      <img src={{url_for('static',filename='profile.jpg')}}> 
+      
+    </div>
+  </nav>
+    <div class="mc">
+      {% for i in F %}
+      <div class='userprofile'>
+        <p class='u'>{{i[0]}}</p>
+        <p class='u'>Name:{{i[1]}}</p>
+        <a class='EditDel' href='/{{user_name}}/profileof/{{i[0]}}'>View profile</a>
+      </div>
+       {% endfor %}
+    </div>
+  </div>
+</body>
+</html>  

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Bloglite-Profile</title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static',filename='Style5.css')}}>
+</head>
+<body>
+  <nav>
+    <div class="l">
+      <img src={{url_for('static',filename='Blog_pic.png')}} class='logo'>
+      <a class="Links" href="/{{user_name}}/profile">View Profile</a>
+      <a class="Links" href="/{{user_name}}/home">Home </a>
+      <a class="Links" href="/login"> Log Out </a>
+      <ul>
+        <li>
+           
+        </li>
+      </ul>
+    </div>
+    <div class="nav-user-icon">
+      <img src={{url_for('static',filename='profile.jpg')}}> 
+      
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="lc">
+      <p class='stats'>
+        <p class='stats'>Total Posts</p>
+        <p class ='stats'>{{f[2]}}</p>
+        <p class='stats'>Followers</p>
+        <p class='stats'>{{f[1]}}</p>
+        <p class='stats'>Following</p>
+        <p class='stats'>{{f[0]}}</p>
+        <br>
+        <a class='stats1' href='/{{user_name}}/following'>List of Followers</a>
+        <br>
+        <br>
+        <br>
+        <a class='stats1' href='/{{user_name}}/blogs'>My Blogs</a>
+        <br>
+        <br>
+        <br>
+        <a class='stats1' href='/{{user_name}}/favourites'>My Favourites</a>
+      </p>
+    </div>
+    <div class="mc">
+      <div class='top'>
+        <p class='details'>User Name:{{F[0]}}</p>
+        <p class='details'>Name:{{F[1]}}</p>
+        <p class='details'>DOB:{{F[2]}}</p>
+        <p class='details'>Contact:{{F[3]}}</p>
+      </div>
+      <div class="bottom">
+        <div class='blogform'>
+          <p class=post-form1>New Blog </p>
+          <form  method="POST" id="blog-form" enctype="multipart/form-data">
+            <p class=post-form>Title </p>
+            <input class=post-form2 type='text' name="title" placeholder='Enter Title ' required>
+            <p class=post-form>Description </p>
+            <input class=post-form2 type='text' name="description" placeholder='Enter Description' required>
+            <p class=post-form>Content </p>
+            <textarea class=post-form2 type='text' name="content" placeholder='Enter Content' required></textarea>
+            <p class=post-form >Image</p>
+            <input type="file" name="pic" value='browse'>
+            <input class=post-form3 type="submit" value="Create Blog">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>  

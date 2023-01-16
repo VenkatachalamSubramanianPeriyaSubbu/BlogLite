@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="static/Style1.css">
+    <body>
+        <form action="/login" method="POST" id="login-form">
+            <div class=detailform>
+            <img src='static/avataricon.png' class='icon'>
+                <h1>Welcome!</h1>
+                <h1>Login</h1>
+                <p>Username</p>
+                <input type="text" name="username" placeholder='Enter Username' required />
+                <p>Password</p>
+                <input type="password" name="password" placeholder='Enter Password' required />
+                <input type="submit" value="Login">
+                  {% if message %}
+                      <p class=m> {{message}} </p>
+                  {% endif %}
+                <p>OR</p>
+                <a  class='Links' href="/registration">Registration</a>
+              </div>
+        </form>
+    </body>
+</head>
+</html>
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+  <title>Bloglite</title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static',filename='Style4.css')}}>
+</head>
+<body>
+  <nav>
+    <div class="l">
+      <img src={{url_for('static',filename='Blog_pic.png')}} class='logo'>
+      <a class="Links" href="/{{user_name}}/profile">View Profile</a>
+      <a class="Links" href="/{{user_name}}/home">Home </a>
+      <a class="Links" href="/login"> Log Out </a>
+      <ul>
+        <li>
+           
+        </li>
+      </ul>
+    </div>
+    
+    <div class="r" >
+      <div class="search-box">
+        <img src={{url_for('static',filename='search.jpg')}}>
+        <form>
+        <input name ='q' type="text" placeholder="Search">
+        <input name = 'searchb' type="button" placeholder="Search">
+        </form>
+    </div>
+    <div class="nav-user-icon">
+      <img src={{url_for('static',filename='profile.jpg')}}>  
+      
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="lc">
+    </div>
+    <div class="mc">
+      {% for result in results %}
+      <div class="results">
+        <p class="resultsc">{{result[0]}}</p>
+        <p class="resultsc">Name:{{result[1]}}</p>
+        <a class="EditDel" href=/{{uu}}/profileof/{{result[0]}}>View Profile</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>  

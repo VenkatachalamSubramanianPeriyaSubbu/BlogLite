@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+  <title>Bloglite</title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static',filename='Style4.css')}}>
+</head>
+<body>
+  <nav>
+    <div class="l">
+      <img src={{url_for('static',filename='Blog_pic.png')}} class='logo'>
+      <a class="Links" href="/{{user_name}}/profile">View Profile</a>
+      <a class="Links" href="/{{user_name}}/home">Home</a>
+      <a class="Links" href="/login"> Log Out </a>
+      <ul>
+        <li>
+           
+        </li>
+      </ul>
+    </div>
+    <div class="nav-user-icon">
+      <img src={{url_for('static',filename='profile.jpg')}}>  
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="lc">
+      <br>
+      <a class='stats1' href='/{{user_name}}/following'>List of Followers</a>
+        <br>
+        <br>
+        <br>
+        <a class='stats1' href='/{{user_name}}/blogs'>My Blogs</a>
+        <br>
+        <br>
+        <br>
+        <a class='stats1' href='/{{user_name}}/favourites'>My Favourites</a>
+    </div>
+    <div class="mc">
+      {% for p in POSTS %}
+      <div class="results">
+        <a class="userlink" href = "/{{user_name}}/profileof/{{p[0]}}"><p class="pt">{{p[0]}}</p2></a>
+        <p class="pd">{{p[3]}}</p>
+        <p class="pu">{{p[1]}}</p>
+        <p class="pc">{{p[2]}}</p>
+        <img  class='pp' src={{p[5]}}>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>  

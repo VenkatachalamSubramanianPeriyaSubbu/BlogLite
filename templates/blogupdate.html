@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Bloglite-Blog Management </title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static',filename='Style8.css')}}>
+</head>
+<body>
+  <nav>
+    <div class="l">
+      <img src={{url_for('static',filename='Blog_pic.png')}} class='logo'>
+      <a class="Links" href="/{{user_name}}/profile">View Profile</a>
+      <a class="Links" href="/{{user_name}}/home">Home</a>
+      <a class="Links" href="/login"> Log Out </a>
+      <ul>
+        <li>
+           
+        </li>
+      </ul>
+    </div>
+    
+    <div class="r" >
+    <div class="nav-user-icon">
+      <img src={{url_for('static',filename='profile.jpg')}}> 
+      
+    </div>
+  </nav>
+    <div class="mc">
+      <p>{{obj}}</p>
+      <p></p>
+      <div class='top'>
+        <div class='blogform'>
+          <p class=post-form1>Edit Blog </p>
+          <form  method="POST" id="blog-form" enctype="multipart/form-data">
+            <p class=post-form>Title </p>
+            <input class=post-form2 type='text' name="title" value="{{Title}}"required>
+            <p class=post-form>Description </p>
+            <input class=post-form2 type='text' name="description" value="{{Desc}}" required>
+            <p class=post-form>Content </p>
+            <input class=post-form4 type='text' name='content' value="{{Content}}" required>
+            <img class='pp' src={{i}}>
+            <p class=post-form>Image </p>
+            <input class=post-form2 type='file' name='pic' >
+            <input class='EditDel' type="submit" value="Edit Blog">
+          </form>
+        </div>
+      </div>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>  

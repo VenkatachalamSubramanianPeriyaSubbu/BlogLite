@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="static/Style3.css">
+    <body>
+        <form action="/registration" method="POST" id="register-form">
+            <div class=detailform>
+            <img src='static/avataricon.png' class='icon'>
+                <h1>Hey!!!</h1>
+                <h1>Join Us</h1>
+                <p>First Name</p>
+                <input type='text' name="first_name" placeholder='Enter Your Name' required>
+                <p>Middle Name</p>
+                <input type='text' name="middle_name" placeholder='Enter Your Name'>
+                <p>Last Name</p>
+                <input type='text' name="last_name" placeholder='Enter Your Name' required>
+                <p>Date of Birth</p>
+                <input type='date' name="dob" placeholder='Enter Your Date of Birth' required>
+              <p>Email</p>
+                <input type='text' name="email" placeholder='Enter Email ID' required>
+                <p>Username</p>
+                <input type="text" name="username" placeholder='Enter Username' required />
+                <p>Password</p>
+                <input type="password" name="password" placeholder='Enter Password' required />
+                <p>Re-Enter Password</p>
+                <input type="password" name="repassword" placeholder='Enter Password Again' required />
+                <input type="submit" value="Join">
+                  {% if message %}
+                      <p class=m> {{message}} </p>
+                  {% endif %}
+                <p>OR</p>
+                <a class='Links' href="/login">Login</a>
+              </div>
+        </form>
+    </body>
+</head>
+</html>

@@ -1,0 +1,393 @@
+<p class=post-form>Attachment-Image </p>
+            <input class=post-form2 type='image' name='pic' placeholder='Attach Image'>
+
+https://profile/
+
+
+@app.route('/user_name/post_id/like', methods=['GET', 'POST'])
+def like():
+  if request.method == 'GET':
+    redirect ('/user_name/home')
+  else:
+    user_name = request.form["user_name"]
+    blog_id = request.form["blog_id"]
+	  # INSERT to Like Table
+    L=Like(p_id=blog_id,by=user_name)
+    db.session.add(L)
+    db.create_all()
+    db.session.commit()
+	  return redirect ('/login')
+
+
+
+action="/{{user_name}}/{{p[5]}}/like" method="POST" id="like-form"
+
+
+
+
+@app.route('/<user_name>/home', methods=['GET', 'POST'])
+def homepage(user_name):
+  if request.method == 'GET':
+    db.create_all()
+    q = request.args.get('q')
+    l = request.args.get('l')
+    pos = Posts.query.all()
+    P = []
+    for i in pos:
+      if i.user != user_name:
+        d=i.date
+        I=Image.query.filter_by(post_id=i.post_id).first()
+        L=Like.query.filter_by(p_id=i.post_id,by=user_name).first()
+        if I:
+          if L:
+            P.append(['liked',i.user, i.title, i.content,d[0:19],i.post_id,I.img_path])
+          else:
+            P.append(['notliked',i.user, i.title, i.content,d[0:19],i.post_id,I.img_path])
+        else:
+          if L:
+            P.append(['liked',i.user, i.title, i.content,d[0:19],i.post_id])
+          else:
+            P.append(['notliked',i.user,i.title,i.content,d[0:19],i.post_id])
+    if q:
+      uu = user_name
+      u = Userdetails.query.filter(Userdetails.username.contains(q))
+      su = []
+      for i in u:
+        su.append([i.username, i.first_name])
+      return render_template('home.html',
+                             results=su,
+                             uu=uu,
+                             user_name=user_name)
+    else:
+      return render_template('home0.html', P=P, user_name=user_name)
+  else:
+    blog_id = request.form["blog_id"]
+  	# INSERT to Like Table
+    L=Like(p_id=blog_id,by=user_name)
+    db.session.add(L)
+    db.create_all()
+    db.session.commit()
+    return redirect('/'+user_name+'/home')
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route('/<user_name>/home', methods=['GET', 'POST','DELETE'])
+def homepage(user_name):
+  if request.method == 'GET':
+    db.create_all()
+    q = request.args.get('q')
+    l = request.args.get('l')
+    pos = Posts.query.all()
+    P = []
+    for i in pos:
+      if i.user != user_name:
+        d=i.date
+        I=Image.query.filter_by(post_id=i.post_id).first()
+        L=Like.query.filter_by(p_id=i.post_id,by=user_name).first()
+        if I:
+          if L:
+            P.append(['unlikeit','liked',i.user, i.title, i.content,d[0:19],i.post_id,I.img_path])
+          else:
+            P.append(['likeit','notliked',i.user, i.title, i.content,d[0:19],i.post_id,I.img_path])
+        else:
+          if L:
+            P.append(['unlikeit','liked',i.user, i.title, i.content,d[0:19],i.post_id])
+          else:
+            P.append(['likeit','notliked',i.user,i.title,i.content,d[0:19],i.post_id])
+    if q:
+      uu = user_name
+      u = Userdetails.query.filter(Userdetails.username.contains(q))
+      su = []
+      for i in u:
+        su.append([i.username, i.first_name])
+      return render_template('home.html',
+                             results=su,
+                             uu=uu,
+                             user_name=user_name)
+    if l:
+      action = request.args("action")
+      blog_id = request.args("blog_id")
+      L=Like(p_id=blog_id,by=user_name)
+      if action=="likeit":
+        db.session.add(L)
+        db.create_all()
+        db.session.commit()
+      else:
+        db.session.delete(L)
+        db.session.commit()
+      return redirect('/'+user_name+'/home')
+    else:
+      return render_template('home0.html', P=P, user_name=user_name)
+      
+  else:
+    action = request.form["action"]
+    blog_id = request.form["blog_id"]
+    L=Like(p_id=blog_id,by=user_name)
+    if action=="likeit":
+      db.session.add(L)
+      db.create_all()
+      db.session.commit()
+    else:
+      db.session.delete(L)
+      db.session.commit()
+    return redirect('/'+user_name+'/home')
+
+
+
+
+def get(self):
+    user=request.args.get('username',None)
+    password=request.args.get('password',None)
+    if user==None:
+      return "BusinessValidationError-Username is required"
+    elif password==None:
+      return "BusinessValidationError-Password is required"
+    u=db.session.query(Userdetails).filter(Userdetails.username==user).first()
+    if u==None:
+      return "UserDoesNotExists"
+    elif password!=u.password:
+      return "IncorrectPassword"
+    else:
+      return {'user_name':user}
+
+
+
+
+
+
+
+
+
+
+
+
+class PostDeleteAPI(Resource):
+  @app.route('/<user_name>/<p_id>/delete')
+  def get(user_name,post_id):
+    q=request.args.get('q')
+    user=db.session.query(Userdetails).filter(Userdetails.username==user_name).first()
+    post=db.session.query(Posts).filter(Posts.post_id==p_id).first()
+    if not q:
+      if user and post:
+        return {"user_name":user.username,"post id":p_id}
+      else:
+        return {"Error_message":"NotFoundError 400"}
+    else:
+      post=db.session.query(Posts).filter(Posts.post_id==post_id).first()
+      if post and post.user==user_name:
+        return {"user_name":Posts.user,"post_id":Posts.post_id}
+      else: return "PostNotDeleted"
+
+
+
+
+
+def get(self,user_name,p_id):
+    user=db.session.query(Userdetails).filter(Userdetails.username==user_name).first()
+    post=db.session.query(Posts).filter(Posts.post_id==p_id).first()
+    if user and post:
+      return {"user_name":user.username,"post id":p_id}
+    else:
+      return {"Error_message":"NotFoundError 400"}
+
+
+
+
+
+
+
+
+
+class PostAPI(Resource):
+  @app.route('/api/<user_name>/blogs')
+  def get(user_name):
+    user=db.session.query(Userdetails).filter(Userdetails.username==user_name).first()
+    if user:
+      return {"user_name":user.username}
+    else:
+      return {"Error_message":"NotFoundError 400"}
+
+
+
+6qwryehsh
+
+
+
+
+
+class PostCreateAndUserInfoAPI(Resource): 
+  def get(user_name):
+    user=db.session.query(Userdetails).filter(Userdetails.username==user_name).first()
+    if user:
+      return {"user_name":user.username}
+    else:
+      return {"Error_message":"NotFoundError 400"}
+      
+  def post():
+    t=request.args.get('title',None)
+    d=request.args.get('description',None)
+    c=request.args.get('content',None)
+    if t==None:
+      return "BusinessValidationError-Title is required"
+    elif d==None:
+      return "BusinessValidationError-Description is required"
+    elif c==None:
+      return "BusinessValidationError-Content is required"
+    else:return{'Title':t,"Description":d,"Content":c}
+      
+class UserRegAPI(Resource):
+  def posts(self):
+    user=request.args.get('username',None)
+    password=request.args.get('password',None)
+    repassword=request.args.get('repassword',None)
+    email=request.args.get('email',None)
+    fn=request.args.get('f_name',None)
+    ln=request.args.get('l_name',None)
+    d=request.args.get('dob',None)
+    if user==None:
+      return "BusinessValidationError-Username is required"
+    elif password==None:
+      return "BusinessValidationError-Password is required"
+    elif repassword==None:
+      return "BusinessValidationError-Re-Enter password"
+    elif email==None:
+      return "BusinessValidationError-Email is required"
+    elif fn==None:
+      return "BusinessValidationError-First Name is required"
+    elif ln==None:
+      return "BusinessValidationError-Last Name is required"
+    elif d==None:
+      return "BusinessValidationError-Date of Birth is required"
+    elif password!=repassword:
+      return "BusinessValidationError-Password and Re-Entered Password should match"
+    elif validemail(email)==False:
+      return "BusinessValidationError-Incorrect Email"
+    u=db.session.query(Userdetails).filter(Userdetails.username==user).first()
+    if u:
+      return "AlreadyExists-Try New Username"
+    else:
+      return {"user_name":user,"email":email,"first_name":fn,"last_name":ln,"date_of_birth":d}
+      
+api.add_resource(PostEditAPI, "/api/<user_name>/<p_id>/edit")
+api.add_resource(PostCreateAndUserInfoAPI, 
+                    "/api/<user_name>/profile")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class BlogAPI(Resource):
+  def get(self,user_name):
+    user=db.session.query(Userdetails).filter(Userdetails.username==user_name).first()
+    if user:
+      return {"user_name":user.username}
+    else:
+      return {"Error_message":"NotFoundError 400"}
+      
+
+class PostCreateAndUserInfoAPI(Resource): 
+  def get(self,user_name):
+    user=db.session.query(Userdetails).filter(Userdetails.username==user_name).first()
+    if user:
+      return {"user_name":user.username}
+    else:
+      return {"Error_message":"NotFoundError 400"}
+      
+  def post():
+    t=request.args.get('title',None)
+    d=request.args.get('description',None)
+    c=request.args.get('content',None)
+    if t==None:
+      return "BusinessValidationError-Title is required"
+    elif d==None:
+      return "BusinessValidationError-Description is required"
+    elif c==None:
+      return "BusinessValidationError-Content is required"
+    else:return{'Title':t,"Description":d,"Content":c}
+
+class PostEditAPI(Resource): 
+  def get(self,user_name,p_id):
+    user=db.session.query(Userdetails).filter(Userdetails.username==user_name).first()
+    p=db.session.query(Posts).filter(Posts.post_id==p_id ,Posts.user==user_name).first()
+    if user and p:
+      return {"user_name":user.username,"post_id":p.post_id}
+    else:
+      return {"Error_message":"NotFoundError 400"}
+      
+  def post(self):
+    t=request.args.get('title',None)
+    d=request.args.get('description',None)
+    c=request.args.get('content',None)
+    if t==None:
+      return "BusinessValidationError-Title is required"
+    elif d==None:
+      return "BusinessValidationError-Description is required"
+    elif c==None:
+      return "BusinessValidationError-Content is required"
+    else:
+      return{'Title':t,"Description":d,"Content":c}
+      
+class UserRegAPI(Resource):
+  def posts(self):
+    user=request.args.get('username',None)
+    password=request.args.get('password',None)
+    repassword=request.args.get('repassword',None)
+    email=request.args.get('email',None)
+    fn=request.args.get('f_name',None)
+    ln=request.args.get('l_name',None)
+    d=request.args.get('dob',None)
+    if user==None:
+      return "BusinessValidationError-Username is required"
+    elif password==None:
+      return "BusinessValidationError-Password is required"
+    elif repassword==None:
+      return "BusinessValidationError-Re-Enter password"
+    elif email==None:
+      return "BusinessValidationError-Email is required"
+    elif fn==None:
+      return "BusinessValidationError-First Name is required"
+    elif ln==None:
+      return "BusinessValidationError-Last Name is required"
+    elif d==None:
+      return "BusinessValidationError-Date of Birth is required"
+    elif password!=repassword:
+      return "BusinessValidationError-Password and Re-Entered Password should match"
+    elif validemail(email)==False:
+      return "BusinessValidationError-Incorrect Email"
+    u=db.session.query(Userdetails).filter(Userdetails.username==user).first()
+    if u:
+      return "AlreadyExists-Try New Username"
+    else:
+      return {"user_name":user,"email":email,"first_name":fn,"last_name":ln,"date_of_birth":d}
+      
+api.add_resource(PostCreateAndUserInfoAPI, 
+                    "/api/<user_name>/profile")
+api.add_resource(BlogAPI, 
+                    "/api/<user_name>/blogs")
+api.add_resource(PostEditAPI, 
+                    "/api/<user_name>/<p_id>/edit")
+
+    <div class="nav-user-icon">
+        <img src={{url_for('static',filename='profile.jpg')}}>
+    </div>

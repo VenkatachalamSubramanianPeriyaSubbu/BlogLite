@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+  <title>Bloglite</title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static',filename='Style4.css')}}>
+</head>
+<body>
+  <nav>
+    <div class="l">
+      <img src={{url_for('static',filename='Blog_pic.png')}} class='logo'>
+      <a class="Links" href="/{{user_name}}/profile">View Profile</a>
+      <a class="Links" href="/{{user_name}}/home">Home </a>
+      <a class="Links" href="/login"> Log Out </a>
+      <ul>
+        <li>
+           
+        </li>
+      </ul>
+    </div>
+    
+    <div class="r" >
+      
+      <div class="search-box">
+        <img src={{url_for('static',filename='search.jpg')}}>
+        <form class='s'>
+        <input name ='q' type="text" placeholder="Search">
+        <input name = 'searchb' type="button" placeholder="Search">
+        </form>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="lc">
+    </div>
+    <div class="mc">
+      {% for p in P %}
+      <div class="results">
+        <a class="userlink" href = "/{{user_name}}/profileof/{{p[2]}}"><p class="pt">{{p[2]}}</p2></a>
+        <p class="pd">{{p[5]}}</p>
+        <p class="pu">{{p[3]}}</p>
+        <p class="pc">{{p[4]}}</p>
+        <img  class='pp' src={{p[7]}}>
+        <form action='/{{user_name}}/{{p[6]}}/like' method="{{p[0]}}" >
+          <input type="hidden" name='blog_id' value={{p[6]}}>
+          <input type="hidden" name='un' value={{user_name}}>
+          <input type='submit' class={{p[1]}} name=l value='Like'>
+        </form >
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>  

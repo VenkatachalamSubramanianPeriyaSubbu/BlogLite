@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+  <title>Bloglite-My Blogs </title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static',filename='Style4.css')}}>
+</head>
+<body>
+  <nav>
+    <div class="l">
+      <img src={{url_for('static',filename='Blog_pic.png')}} class='logo'>
+      <a class="Links" href="/{{user_name}}/profile">View Profile</a>
+      <a class="Links" href="/{{user_name}}/home">Home </a>
+      <a class="Links" href="/login"> Log Out </a>
+      <ul>
+        <li>
+           
+        </li>
+      </ul>
+    </div>
+    
+    <div class="nav-user-icon">
+      <img src={{url_for('static',filename='profile.jpg')}}>  
+      
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="lc">
+        <p class='detail1'>{{F[0]}}</p>
+        <p class='detail'>Name</p>
+        <p class='detail1'>{{F[1]}}</p>
+        <p class='detail'>DOB</p>
+        <p class='detail1'>{{F[2]}}</p>
+        <p class='detail'>Contact</p>
+        <p class='detail1'>{{F[3]}}</p>
+        <p class='stats'>Total Posts</p>
+        <p class ='stats'>{{f[2]}}</p>
+        <p class='stats'>Followers</p>
+        <p class='stats'>{{f[1]}}</p>
+        <p class='stats'>Following</p>
+        <p class='stats'>{{f[0]}}</p>
+        <br>
+        <a class='stats1' href='/{{user_name}}/following'>List of Followers</a>
+        <br>
+        <br>
+        <br>
+        <a class='stats1' href='/{{user_name}}/favourites'>My Favourites</a>
+      </p>
+    </div>
+    <div class="mc">
+      {% for p in P%}
+      <div class="results">
+        <p class="pu">{{p[0]}}</p>
+        <p class='pd'>{{p[4]}}</p>
+        <p class="pc">{{p[1]}}</p>
+        <img class='pp' src={{p[5]}}>
+        <br>
+        <a class="EditDel" href="/{{user_name}}/{{p[3]}}/edit">Edit</a>
+        <a class="EditDel" href ="/{{user_name}}/{{p[3]}}/delete">Delete</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>  

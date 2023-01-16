@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Bloglite-User Profile</title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static',filename='Style6.css')}}>
+</head>
+<body>
+  <nav>
+    <div class="l">
+      <img src={{url_for('static',filename='Blog_pic.png')}} class='logo'>
+      <a class="Links" href="/{{user_name}}/profile">View Profile</a>
+      <a class="Links" href="/{{user_name}}/home">Home </a>
+      <a class="Links" href="/login"> Log Out </a>
+      <ul>
+        <li>
+        </li>
+      </ul>
+    </div>
+    <div class="nav-user-icon">
+      <img src={{url_for('static',filename='profile.jpg')}}> 
+      
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="lc">
+      <p class='stats'>
+        <p class='stats'>Total Posts</p>
+        <p class ='stats'>{{f[2]}}</p>
+        <p class='stats'>Followers</p>
+        <p class='stats'>{{f[1]}}</p>
+        <p class='stats'>Following</p>
+        <p class='stats'>{{f[0]}}</p>
+        <form>
+          <input name="followb" class ="B" type="submit" value={{fl}}>
+        </form>
+      </p>
+    </div>
+    <div class="mc">
+      <div class='top'>
+        <div class='profile'>
+          <h2 class='detail'>{{F[0]}}</h2>
+          <p class='detail'>Name:{{F[1]}}</p>
+          <p class='detail'>DOB:{{F[2]}}</p>
+          <p class='detail'>Contact:{{F[3]}}</p>
+        </div>
+      </div>
+      <br>
+      <div class='bottom'>
+        {% for i in blogs %}
+        <div class='blogs'>
+          <h2 class='pu'>{{i[0]}}</h2>
+          <p class='pd'>{{i[2]}}</p>
+          <p class='pc' >{{i[1]}}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</body>
+</html>  

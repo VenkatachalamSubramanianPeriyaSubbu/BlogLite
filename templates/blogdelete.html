@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Bloglite-Blog Management </title>
+  <link rel="stylesheet" type="text/css" href={{url_for('static',filename='Style7.css')}}>
+</head>
+<body>
+  <nav>
+    <div class="l">
+      <img src={{url_for('static',filename='Blog_pic.png')}} class='logo'>
+      <a class="Links" href="/{{user_name}}/profile">View Profile</a>
+      <a class="Links" href="/{{user_name}}/home">Home</a>
+      <a class="Links" href="/login"> Log Out </a>
+      <ul>
+        <li>
+           
+        </li>
+      </ul>
+    </div>
+    
+
+    <div class="nav-user-icon">
+      <img src={{url_for('static',filename='profile.jpg')}}> 
+      
+    </div>
+  </nav>
+    <div class="mc">
+      <div class='blogs'
+        <p class='pc'>{{Title}}</p>
+        <p class='pc'>{{Desc}}</p>
+        <p class='pc'>{{Content}}</p>
+        <img class='pp' src={{i}}>
+        <form >
+          <input class='EditDel' type=submit name=B placeholder="Confirm Delete" value="Confirm Delete">
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>  

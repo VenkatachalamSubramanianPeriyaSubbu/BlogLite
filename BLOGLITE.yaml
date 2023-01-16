@@ -1,0 +1,409 @@
+openapi: 3.0.3
+info:
+  title: Blog Lite- OpenAPI 3.0.0
+  description: |-
+    This is a Server based on the OpenAPI 3.0 specification for Blog Lite. 
+    
+  contact:
+    email: 21f3001922@student.onlinedegree.iitm.ac.in
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+
+servers:
+  - url: https://bloglitemad1project.venkatachalamsu.repl.co/
+  - url: http://127.0.0.1:5000/
+  - url: http://127.0.0.1:8080/
+tags:
+  - name: Post
+    description: CRUD on Post
+  - name: User
+    description: CRUD on User
+
+paths:
+  /api/{user_name}:
+    post:
+      tags:
+        - Post
+      summary: Add a new post.
+      description: Add a new post.
+      operationId: addPost
+      parameters:
+        - name: user_name
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Create a new post.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostOutput'          
+        '405':
+          description: Invalid input
+
+  /api/{user_name}/{p_id}:
+    get:
+      tags:
+        - Post
+      summary: Finds Post 
+      description: Find Post
+      operationId: findPost
+      parameters:
+        - name: user_name
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: string
+        - name: p_id
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/PostOutput'          
+        '400':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/PostError'
+    
+    put:
+      tags:
+        - Post
+      summary: Update an existing post
+      description: Update an existing post by Username and Id
+      operationId: updatePost
+      parameters:
+        - name: user_name
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: string
+        - name: p_id
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Update an existent post.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostOutput'          
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/PostError'
+    
+    delete:
+      tags:
+        - Post
+      summary: Delete Post 
+      description: Delete Post
+      operationId: deletePost
+      parameters:
+        - name: user_name
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: string
+        - name: p_id
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/PostDeleteOutput'          
+        '400':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/PostError'
+
+  /api/user/{user_name}:
+    get:
+      tags:
+        - User
+      summary: Finds User
+      description: Find User
+      operationId: findUser
+      parameters:
+        - name: user_name
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/UserOutput'          
+ 
+        '400':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/PostError'
+          
+    post:
+      tags:
+        - User
+      summary: Add a new user.
+      description: Add a new user.
+      operationId: addUser
+      parameters:
+        - name: user_name
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Create a new user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPostOutput'          
+
+        '405':
+          description: Invalid input
+    
+    put:
+      tags:
+        - User
+      summary: Update an existing user details
+      description: Update an existing user information
+      operationId: updateUser
+      parameters:
+        - name: user_name
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEditOutput'          
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/PostError'
+          
+          
+    delete:
+      tags:
+        - User
+      summary: Delete User
+      description: Delete User
+      operationId: deleteUser
+      parameters:
+        - name: user_name
+          in: path
+          description: 'username'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/UserDeleteOutput'          
+        '400':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/PostError'
+          
+components:
+  schemas:
+    PostCreate:
+      required:
+        - title
+        - description
+        - content
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Blog Title"
+        description:
+          type: string
+          example: "This is my Description"
+        content:
+          type: string
+          example: "This is the content of my blog"
+    PostOutput:
+      required:
+        - title
+        - description
+        - content
+        - post_id
+      type: object
+      properties:
+        username:
+          type: string
+          example: "Rajkumar Paradesai"
+        post_id:
+          type: integer
+          example: 17
+        title:
+          type: string
+          example: "Blog Title"
+        description:
+          type: string
+          example: "This is my Description"
+        content:
+          type: string
+          example: "This is the content of my blog"
+    PostDeleteOutput:
+      type: object
+      properties:
+        Deletion:
+          type: string
+          example: "Success"
+    UserOutput:
+      required: 
+        - username
+        - password
+        - last_name
+        - first_name
+      type: object
+      properties:
+        username:
+          type: string
+          example: "Venkat"
+    UserCreate:
+      required: 
+        - username
+        - password
+        - last_name
+        - first_name
+        - email
+        - dob
+      type: object
+      properties:
+        username:
+          type: string
+          example: "Venkat"
+        password:
+          type: string
+          example: "Password"
+        first_name:
+          type: string
+          example: "Venkatachalam"
+        middle_name:
+          type: string
+          example: "Subramanian"
+        last_name:
+          type: string
+          example: "Periya Subbu"
+        email:
+          type: string
+          example: "name.email.com"
+        dob:
+          type: string
+          example: "dd/mm/yyyy"
+    UserEditOutput:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "Venkat"
+        Edit:
+          type: string
+          example: "Success"
+    UserPostOutput:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "Venkat"
+        New User Added:
+          type: string
+          example: "Success"
+    UserDeleteOutput:
+      type: object
+      properties:
+        Deletion:
+          type: string
+          example: "Success"
+    PostError:
+      type: object
+      properties:
+        Error:
+          type: string
+          example: "User Not Found"
+
+
+        
+
+
+ 
